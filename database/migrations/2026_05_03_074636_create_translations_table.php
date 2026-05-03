@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->text('banglish_text');
             $table->text('bangla_text');
-            $table->text('arabic_text');
             $table->timestamps();
         });
     }

@@ -4,72 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Models\Translation;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class TranslationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the saved translations.
      */
-    public function index()
+    public function index(): View
     {
         $translations = Translation::latest()->get();
         return view('pages.index', compact('translations'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created translation in database.
      */
-    public function create()
-    {
-        return view('pages.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'banglish_text' => 'required',
-            'bangla_text' => 'required',
+            'banglish_text' => 'required|string',
+            'bangla_text' => 'required|string',
         ]);
 
-        Translation::create($request->all());
+        Translation::create($request->only(['banglish_text', 'bangla_text']));
 
-        return redirect()->route('translations.index')->with('success', 'Saved successfully!');
+        return redirect()->route('translations.index')->with('success', 'Translation saved successfully!');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Update an existing translation.
      */
-    public function edit(string $id)
-    {
-        $translation = Translation::findOrFail($id);
-        return view('pages.edit', compact('translation'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
         $request->validate([
-            'banglish_text' => 'required',
-            'bangla_text' => 'required',
+            'banglish_text' => 'required|string',
+            'bangla_text' => 'required|string',
         ]);
 
         $translation = Translation::findOrFail($id);
-        $translation->update($request->all());
+        $translation->update($request->only(['banglish_text', 'bangla_text']));
 
-        return redirect()->route('translations.index')->with('success', 'Updated successfully!');
+        return redirect()->route('translations.index')->with('success', 'Translation updated successfully!');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove a translation from the database.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
         Translation::destroy($id);
-        return redirect()->back();
+        return redirect()->route('translations.index')->with('success', 'Translation deleted successfully!');
     }
 }
