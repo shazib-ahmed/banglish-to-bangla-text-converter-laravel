@@ -23,8 +23,8 @@ A modern, fast, and elegant web application built with Laravel to convert Bangli
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/banglish-to-bangla-text-converter.git
-   cd banglish-to-bangla-text-converter
+   https://github.com/shazib-ahmed/banglish-to-bangla-text-converter-laravel.git
+   cd banglish-to-bangla-text-converter-laravel
    ```
 
 2. **Install PHP dependencies:**
